@@ -1,11 +1,11 @@
-import { View, Text,StyleSheet } from 'react-native'
+import { View, Text,StyleSheet,Image } from 'react-native'
 import React,{useState} from 'react'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Feather from 'react-native-vector-icons/Feather'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-const ExamTypeScreen = () => {
+const ExamTypeScreen = ({navigation}) => {
  
   const [inputType,setInputType] = useState(false);
   const [trueFalseType,setTrueFalseType] = useState(true);
@@ -23,8 +23,20 @@ const ExamTypeScreen = () => {
             width:80,
             borderWidth:1,
             borderColor:'white',
-            borderRadius:20
+            borderRadius:20,
+            justifyContent:'center',
+            alignItems:'center'
           }}>
+             <View style={{flexDirection:'row',}}>
+            <Image
+            source={require('../assets/coin.png')}
+            style={{
+              height:25,
+              width:25
+            }}
+            />
+            <Text style={{color:'white',marginLeft:5}}>20</Text>
+            </View>
 
           </View>
           <TouchableOpacity style={{
@@ -38,7 +50,7 @@ const ExamTypeScreen = () => {
             justifyContent:'center',
             alignItems:'center'
           }}>
-            <Feather name='plus' size={16} color={'tranparent'}/>
+            <Feather name='plus' size={16} color={'black'}/>
 
           </TouchableOpacity>
         </View>
@@ -146,7 +158,7 @@ const ExamTypeScreen = () => {
      
 
      <TouchableOpacity
-     // onPress={() => navigation.navigate('home')}
+      onPress={() => navigation.navigate('quiz')}
      style={{
        height: 70,
        width: 70,

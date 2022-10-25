@@ -2,6 +2,7 @@ import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
 import React from 'react';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Feather from 'react-native-vector-icons/Feather'
 const screenWidth = Dimensions.get('screen').width;
 
 const HomeScreen = ({navigation}) => {
@@ -11,13 +12,15 @@ const HomeScreen = ({navigation}) => {
         style={{
           flexDirection: 'row',
           alignItems: 'center',
+          justifyContent:'space-between',
+          padding:20,
         }}>
         <View
           style={{
             height: 100,
             width: 100,
             borderRadius: 50,
-            borderWidth: 5,
+            borderWidth: 10,
             borderColor: 'white',
             justifyContent: 'center',
             alignItems: 'center',
@@ -27,8 +30,8 @@ const HomeScreen = ({navigation}) => {
               uri: 'https://image.shutterstock.com/mosaic_250/2805913/1713757231/stock-photo-young-buisnessman-wearing-eyeglasses-jacket-and-shirt-holding-arms-crossed-looking-at-camera-1713757231.jpg',
             }}
             style={{
-              height: 90,
-              width: 90,
+              height: 80,
+              width: 80,
               borderRadius: 50,
             }}
           />
@@ -36,6 +39,44 @@ const HomeScreen = ({navigation}) => {
         <View>
           <Text style={{color: 'white'}}>Welcome!</Text>
           <Text style={{color: 'white'}}>Muhib Ahmed</Text>
+        </View>
+        <View style={{flexDirection:'row',alignItems:'center'}}>
+          <View style={{
+            height:40,
+            width:80,
+            borderWidth:1,
+            borderColor:'white',
+            borderRadius:20,
+            flexDirection:'row',
+            justifyContent:'center',
+            alignItems:'center'
+          }}>
+            <View style={{flexDirection:'row',}}>
+            <Image
+            source={require('../assets/coin.png')}
+            style={{
+              height:25,
+              width:25
+            }}
+            />
+            <Text style={{color:'white',marginLeft:5}}>20</Text>
+            </View>
+
+          </View>
+          <TouchableOpacity style={{
+            height:25,
+            width:25,
+            borderRadius:14,
+            justifyContent:'center',
+            alignItems:'center',
+            backgroundColor:'white',
+            marginLeft:4,
+            justifyContent:'center',
+            alignItems:'center'
+          }}>
+            <Feather name='plus' size={16} color={'black'}/>
+
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -56,6 +97,19 @@ const HomeScreen = ({navigation}) => {
               <Text style={{fontSize: 26, fontWeight: 'bold', color: 'white'}}>
                 EASY
               </Text>
+              <View style={{
+                height:5,
+                width:120,
+                backgroundColor:'white',
+                marginVertical:10,
+                borderRadius:8
+              }}>
+                <View style={{
+                  height:5,
+                  width:'80%',
+                  backgroundColor:'blue'
+                }}/>
+              </View>
             </View>
             <View
               style={{
@@ -73,11 +127,12 @@ const HomeScreen = ({navigation}) => {
                   fontSize: 12,
                   fontWeight: '600',
                   textAlign: 'center',
+                  marginVertical:10
                 }}>
                 100 EASY QUESTIONS FOR DEVELOPING YOUR SKILL
               </Text>
 
-              <View style={{flexDirection: 'row', marginVertical: 5}}>
+              <View style={{flexDirection: 'row', marginVertical: 8}}>
                 <View
                   style={{
                     height: 15,
@@ -90,7 +145,7 @@ const HomeScreen = ({navigation}) => {
                   }}>
                   <Ionicons
                     name="ios-checkmark-done-sharp"
-                    color={'#79003A'}
+                    color={'green'}
                     size={10}
                   />
                 </View>
@@ -118,7 +173,7 @@ const HomeScreen = ({navigation}) => {
                   }}>
                   <Ionicons
                     name="ios-checkmark-done-sharp"
-                    color={'#79003A'}
+                    color={'green'}
                     size={10}
                   />
                 </View>
@@ -150,6 +205,19 @@ const HomeScreen = ({navigation}) => {
               <Text style={{fontSize: 26, fontWeight: 'bold', color: 'white'}}>
                 HARD
               </Text>
+              <View style={{
+                height:5,
+                width:120,
+                backgroundColor:'white',
+                marginVertical:10,
+                borderRadius:8
+              }}>
+                <View style={{
+                  height:5,
+                  width:'80%',
+                  backgroundColor:'blue'
+                }}/>
+              </View>
             </View>
             <View
               style={{
@@ -167,11 +235,12 @@ const HomeScreen = ({navigation}) => {
                   fontSize: 12,
                   fontWeight: '600',
                   textAlign: 'center',
+                  marginVertical:10
                 }}>
                 100 EASY QUESTIONS FOR DEVELOPING YOUR SKILL
               </Text>
 
-              <View style={{flexDirection: 'row', marginVertical: 5}}>
+              <View style={{flexDirection: 'row', marginVertical: 8}}>
                 <View
                   style={{
                     height: 15,
@@ -184,7 +253,7 @@ const HomeScreen = ({navigation}) => {
                   }}>
                   <Ionicons
                     name="ios-checkmark-done-sharp"
-                    color={'#79003A'}
+                    color={'#4800A3'}
                     size={10}
                   />
                 </View>
@@ -212,7 +281,7 @@ const HomeScreen = ({navigation}) => {
                   }}>
                   <Ionicons
                     name="ios-checkmark-done-sharp"
-                    color={'#79003A'}
+                    color={'#4800A3'}
                     size={10}
                   />
                 </View>
@@ -245,6 +314,19 @@ const HomeScreen = ({navigation}) => {
               <Text style={{fontSize: 26, fontWeight: 'bold', color: 'white'}}>
                 MEDIUM
               </Text>
+              <View style={{
+                height:5,
+                width:120,
+                backgroundColor:'white',
+                marginVertical:10,
+                borderRadius:8
+              }}>
+                <View style={{
+                  height:5,
+                  width:'80%',
+                  backgroundColor:'blue'
+                }}/>
+              </View>
             </View>
             <View
               style={{
@@ -262,11 +344,12 @@ const HomeScreen = ({navigation}) => {
                   fontSize: 12,
                   fontWeight: '600',
                   textAlign: 'center',
+                  marginVertical:10
                 }}>
                 100 EASY QUESTIONS FOR DEVELOPING YOUR SKILL
               </Text>
 
-              <View style={{flexDirection: 'row', marginVertical: 5}}>
+              <View style={{flexDirection: 'row', marginVertical: 8}}>
                 <View
                   style={{
                     height: 15,
@@ -279,7 +362,7 @@ const HomeScreen = ({navigation}) => {
                   }}>
                   <Ionicons
                     name="ios-checkmark-done-sharp"
-                    color={'#79003A'}
+                    color={'#019EE1'}
                     size={10}
                   />
                 </View>
@@ -307,7 +390,7 @@ const HomeScreen = ({navigation}) => {
                   }}>
                   <Ionicons
                     name="ios-checkmark-done-sharp"
-                    color={'#79003A'}
+                    color={'#019EE1'}
                     size={10}
                   />
                 </View>
@@ -339,6 +422,19 @@ const HomeScreen = ({navigation}) => {
               <Text style={{fontSize: 26, fontWeight: 'bold', color: 'white'}}>
                 NINJA
               </Text>
+              <View style={{
+                height:5,
+                width:120,
+                backgroundColor:'white',
+                marginVertical:10,
+                borderRadius:8
+              }}>
+                <View style={{
+                  height:5,
+                  width:'80%',
+                  backgroundColor:'blue'
+                }}/>
+              </View>
             </View>
             <View
               style={{
@@ -356,11 +452,12 @@ const HomeScreen = ({navigation}) => {
                   fontSize: 12,
                   fontWeight: '600',
                   textAlign: 'center',
+                  marginVertical:10
                 }}>
                 100 EASY QUESTIONS FOR DEVELOPING YOUR SKILL
               </Text>
 
-              <View style={{flexDirection: 'row', marginVertical: 5}}>
+              <View style={{flexDirection: 'row', marginVertical: 8}}>
                 <View
                   style={{
                     height: 15,

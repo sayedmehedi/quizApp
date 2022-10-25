@@ -44,7 +44,8 @@ const WelcomeScreen = ({navigation}) => {
               width: 240,
               backgroundColor: '#1E2237',
               borderRadius: 3,
-              color:'white'
+              color:'white',
+              paddingLeft:10
             }}
           />
           <Text
@@ -53,13 +54,15 @@ const WelcomeScreen = ({navigation}) => {
           </Text>
           <TouchableOpacity
             style={{
-              height: 70,
+              height: 60,
               width: 240,
               backgroundColor: 'white',
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 8,
+              justifyContent:'space-between',
+              paddingHorizontal:15
             }}>
             <View
               style={{
@@ -72,7 +75,7 @@ const WelcomeScreen = ({navigation}) => {
               }}>
               <AntDesign name="google" size={20} color={'white'} />
             </View>
-            <Text style={{color: 'black', fontSize: 20, fontWeight: 'bold'}}>
+            <Text style={{color: 'black', fontSize: 18, fontWeight: 'bold'}}>
               Continue with Google
             </Text>
           </TouchableOpacity>
