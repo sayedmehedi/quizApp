@@ -1,93 +1,106 @@
-import {View, Text, Image, StyleSheet, Dimensions} from 'react-native';
 import React from 'react';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Feather from 'react-native-vector-icons/Feather'
+import useGetAuthDataQuery from '../hooks/useGetAuthDataQuery';
+import {
+  View,
+  Text,
+  Image,
+  StyleSheet,
+  Dimensions,
+  TouchableOpacity,
+} from 'react-native';
+
 const screenWidth = Dimensions.get('screen').width;
 
-const HomeScreen = ({navigation}) => {
+const ExamDifficultyScreen = ({navigation}) => {
+  const {data: getAuthDataResponse} = useGetAuthDataQuery();
+
   return (
     <View style={{flex: 1, backgroundColor: '#000815'}}>
       <View
         style={{
+          padding: 20,
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent:'space-between',
-          padding:20,
+          justifyContent: 'space-between',
         }}>
         <View
           style={{
-            height: 100,
             width: 100,
-            borderRadius: 50,
+            height: 100,
             borderWidth: 10,
+            borderRadius: 50,
             borderColor: 'white',
-            justifyContent: 'center',
             alignItems: 'center',
+            justifyContent: 'center',
           }}>
           <Image
             source={{
-              uri: 'https://image.shutterstock.com/mosaic_250/2805913/1713757231/stock-photo-young-buisnessman-wearing-eyeglasses-jacket-and-shirt-holding-arms-crossed-looking-at-camera-1713757231.jpg',
+              uri: getAuthDataResponse.user.avatar,
             }}
             style={{
-              height: 80,
               width: 80,
+              height: 80,
               borderRadius: 50,
             }}
           />
         </View>
         <View>
           <Text style={{color: 'white'}}>Welcome!</Text>
-          <Text style={{color: 'white'}}>Muhib Ahmed</Text>
+          <Text style={{color: 'white'}}>{getAuthDataResponse.user.name}</Text>
         </View>
-        <View style={{flexDirection:'row',alignItems:'center'}}>
-          <View style={{
-            height:40,
-            width:80,
-            borderWidth:1,
-            borderColor:'white',
-            borderRadius:20,
-            flexDirection:'row',
-            justifyContent:'center',
-            alignItems:'center'
-          }}>
-            <View style={{flexDirection:'row',}}>
-            <Image
-            source={require('../assets/coin.png')}
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <View
             style={{
-              height:25,
-              width:25
-            }}
-            />
-            <Text style={{color:'white',marginLeft:5}}>20</Text>
+              height: 40,
+              width: 80,
+              borderWidth: 1,
+              borderRadius: 20,
+              borderColor: 'white',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <View style={{flexDirection: 'row'}}>
+              <Image
+                source={require('../assets/coin.png')}
+                style={{
+                  width: 25,
+                  height: 25,
+                }}
+              />
+              <Text style={{color: 'white', marginLeft: 5}}>
+                {getAuthDataResponse.user.coins}
+              </Text>
             </View>
-
           </View>
-          <TouchableOpacity style={{
-            height:25,
-            width:25,
-            borderRadius:14,
-            justifyContent:'center',
-            alignItems:'center',
-            backgroundColor:'white',
-            marginLeft:4,
-            justifyContent:'center',
-            alignItems:'center'
-          }}>
-            <Feather name='plus' size={16} color={'black'}/>
-
+          <TouchableOpacity
+            style={{
+              height: 25,
+              width: 25,
+              marginLeft: 4,
+              borderRadius: 14,
+              alignItems: 'center',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'white',
+              justifyContent: 'center',
+            }}>
+            <Feather name="plus" size={16} color={'black'} />
           </TouchableOpacity>
         </View>
       </View>
 
       <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
         <View>
-        <TouchableOpacity
-        onPress={()=>navigation.navigate('examType')}
-            style={[
-              styles.typeContainer,
-              { borderRadius: 20},
-            ]}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('QuestionKind', {
+                difficultyLevel: 'easy',
+              })
+            }
+            style={[styles.typeContainer, {borderRadius: 20}]}>
             <View
               style={{
                 flex: 1.5,
@@ -97,29 +110,31 @@ const HomeScreen = ({navigation}) => {
               <Text style={{fontSize: 26, fontWeight: 'bold', color: 'white'}}>
                 EASY
               </Text>
-              <View style={{
-                height:5,
-                width:120,
-                backgroundColor:'white',
-                marginVertical:10,
-                borderRadius:8
-              }}>
-                <View style={{
-                  height:5,
-                  width:'80%',
-                  backgroundColor:'blue'
-                }}/>
+              <View
+                style={{
+                  height: 5,
+                  width: 120,
+                  backgroundColor: 'white',
+                  marginVertical: 10,
+                  borderRadius: 8,
+                }}>
+                <View
+                  style={{
+                    height: 5,
+                    width: '80%',
+                    backgroundColor: 'blue',
+                  }}
+                />
               </View>
             </View>
             <View
               style={{
                 flex: 2,
+                padding: 5,
+                justifyContent: 'center',
                 backgroundColor: '#00AA3A',
                 borderBottomLeftRadius: 10,
                 borderBottomRightRadius: 10,
-                justifyContent: 'center',
-                // alignItems:'center',
-                padding: 5,
               }}>
               <Text
                 style={{
@@ -127,7 +142,7 @@ const HomeScreen = ({navigation}) => {
                   fontSize: 12,
                   fontWeight: '600',
                   textAlign: 'center',
-                  marginVertical:10
+                  marginVertical: 10,
                 }}>
                 100 EASY QUESTIONS FOR DEVELOPING YOUR SKILL
               </Text>
@@ -192,9 +207,14 @@ const HomeScreen = ({navigation}) => {
           </TouchableOpacity>
 
           <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('QuestionKind', {
+                difficultyLevel: 'medium',
+              })
+            }
             style={[
               styles.typeContainer,
-              { borderRadius: 20,backgroundColor:'#6401E1'},
+              {borderRadius: 20, backgroundColor: '#6401E1'},
             ]}>
             <View
               style={{
@@ -205,18 +225,21 @@ const HomeScreen = ({navigation}) => {
               <Text style={{fontSize: 26, fontWeight: 'bold', color: 'white'}}>
                 HARD
               </Text>
-              <View style={{
-                height:5,
-                width:120,
-                backgroundColor:'white',
-                marginVertical:10,
-                borderRadius:8
-              }}>
-                <View style={{
-                  height:5,
-                  width:'80%',
-                  backgroundColor:'blue'
-                }}/>
+              <View
+                style={{
+                  height: 5,
+                  width: 120,
+                  backgroundColor: 'white',
+                  marginVertical: 10,
+                  borderRadius: 8,
+                }}>
+                <View
+                  style={{
+                    height: 5,
+                    width: '80%',
+                    backgroundColor: 'blue',
+                  }}
+                />
               </View>
             </View>
             <View
@@ -235,7 +258,7 @@ const HomeScreen = ({navigation}) => {
                   fontSize: 12,
                   fontWeight: '600',
                   textAlign: 'center',
-                  marginVertical:10
+                  marginVertical: 10,
                 }}>
                 100 EASY QUESTIONS FOR DEVELOPING YOUR SKILL
               </Text>
@@ -299,8 +322,13 @@ const HomeScreen = ({navigation}) => {
             </View>
           </TouchableOpacity>
         </View>
-        <View style={{marginTop:20}}>
-        <TouchableOpacity
+        <View style={{marginTop: 20}}>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('QuestionKind', {
+                difficultyLevel: 'hard',
+              })
+            }
             style={[
               styles.typeContainer,
               {backgroundColor: '#019EE1', borderRadius: 20},
@@ -314,18 +342,21 @@ const HomeScreen = ({navigation}) => {
               <Text style={{fontSize: 26, fontWeight: 'bold', color: 'white'}}>
                 MEDIUM
               </Text>
-              <View style={{
-                height:5,
-                width:120,
-                backgroundColor:'white',
-                marginVertical:10,
-                borderRadius:8
-              }}>
-                <View style={{
-                  height:5,
-                  width:'80%',
-                  backgroundColor:'blue'
-                }}/>
+              <View
+                style={{
+                  height: 5,
+                  width: 120,
+                  backgroundColor: 'white',
+                  marginVertical: 10,
+                  borderRadius: 8,
+                }}>
+                <View
+                  style={{
+                    height: 5,
+                    width: '80%',
+                    backgroundColor: 'blue',
+                  }}
+                />
               </View>
             </View>
             <View
@@ -344,7 +375,7 @@ const HomeScreen = ({navigation}) => {
                   fontSize: 12,
                   fontWeight: '600',
                   textAlign: 'center',
-                  marginVertical:10
+                  marginVertical: 10,
                 }}>
                 100 EASY QUESTIONS FOR DEVELOPING YOUR SKILL
               </Text>
@@ -409,6 +440,11 @@ const HomeScreen = ({navigation}) => {
           </TouchableOpacity>
 
           <TouchableOpacity
+            onPress={() =>
+              navigation.navigate('QuestionKind', {
+                difficultyLevel: 'ninja',
+              })
+            }
             style={[
               styles.typeContainer,
               {backgroundColor: '#E1016D', borderRadius: 20},
@@ -422,18 +458,21 @@ const HomeScreen = ({navigation}) => {
               <Text style={{fontSize: 26, fontWeight: 'bold', color: 'white'}}>
                 NINJA
               </Text>
-              <View style={{
-                height:5,
-                width:120,
-                backgroundColor:'white',
-                marginVertical:10,
-                borderRadius:8
-              }}>
-                <View style={{
-                  height:5,
-                  width:'80%',
-                  backgroundColor:'blue'
-                }}/>
+              <View
+                style={{
+                  height: 5,
+                  width: 120,
+                  backgroundColor: 'white',
+                  marginVertical: 10,
+                  borderRadius: 8,
+                }}>
+                <View
+                  style={{
+                    height: 5,
+                    width: '80%',
+                    backgroundColor: 'blue',
+                  }}
+                />
               </View>
             </View>
             <View
@@ -452,7 +491,7 @@ const HomeScreen = ({navigation}) => {
                   fontSize: 12,
                   fontWeight: '600',
                   textAlign: 'center',
-                  marginVertical:10
+                  marginVertical: 10,
                 }}>
                 100 EASY QUESTIONS FOR DEVELOPING YOUR SKILL
               </Text>
@@ -528,8 +567,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#00E44E',
     borderRadius: 10,
-    marginTop:10
+    marginTop: 10,
   },
 });
 
-export default HomeScreen;
+export default ExamDifficultyScreen;

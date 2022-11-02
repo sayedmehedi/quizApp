@@ -1,68 +1,58 @@
-import React from "react";
-import AntDesign from "react-native-vector-icons/AntDesign";
-import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import Entypo from 'react-native-vector-icons/Entypo'
-import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import {View, Text, TouchableNativeFeedback,StyleSheet} from "react-native";
-import {  createBottomTabNavigator,} from "@react-navigation/bottom-tabs";
-import HomeScreen from "../screens/HomeScreen";
-import QuizScreen from "../screens/QuizScreen";
-
-
+import React from 'react';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
+import Entypo from 'react-native-vector-icons/Entypo';
+import ResultsScreen from '../screens/ResultsScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import LeaderboardScreen from '../screens/LeaderboardScreen';
+import ExaminationsScreen from '../screens/ExaminationsScreen';
+import Foundation from 'react-native-vector-icons/Foundation';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 const HomeTab = createBottomTabNavigator();
 
-
-
 const TabNavigator = () => {
-  
-
   return (
     <HomeTab.Navigator
-    screenOptions={{
-      headerShown: false,
-      tabBarShowLabel: false,
-      tabBarStyle: {
-        height:90,
-        width:'100%',
-        elevation: 0,
-        backgroundColor: '#1E2237',
-        ...styles.shadow,
-        bottom:20,
-        position:'absolute',
-        borderRadius:10,
-        
-       
-        
-      },
-      tabBarHideOnKeyboard: true,
-      //tabBarButton: buttonNativeFeedback,
+      screenOptions={{
+        headerShown: false,
+        tabBarShowLabel: false,
+        tabBarStyle: {
+          left: 20,
+          right: 20,
+          height: 90,
+          bottom: 25,
+          borderRadius: 15,
+          ...styles.shadow,
+          position: 'absolute',
+          backgroundColor: '#1E2237',
+        },
+        tabBarHideOnKeyboard: true,
       }}>
       <HomeTab.Screen
-        component={HomeScreen}
-        name='Home'
-    
+        name="Examinations"
+        component={ExaminationsScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({focused}) => (
             <View
               style={{
-                justifyContent: "center",
-                alignItems: "center",
                 flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
               }}>
               <Entypo
                 size={22}
                 name="home"
-                color={focused ? 'white' : "gray"}
+                color={focused ? 'white' : 'gray'}
               />
               <Text
                 style={{
-                  color: focused ? 'white' : "gray",
                   fontSize: 10,
-                  
+                  color: focused ? 'white' : 'gray',
                 }}>
-                Home
+                Exams
               </Text>
             </View>
           ),
@@ -70,126 +60,91 @@ const TabNavigator = () => {
       />
 
       <HomeTab.Screen
-       name="map"
-       component={QuizScreen}
-       options={{
-        headerShown: false,
-        tabBarIcon: ({focused}) => (
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              flex: 1,
-            }}>
-            <FontAwesome5
-              size={22}
-              name="map-marker-alt"
-              color={focused ? 'white' : "gray"}
-            />
-            <Text
+        name="Results"
+        component={ResultsScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({focused}) => (
+            <View
               style={{
-                color: focused ? 'white' : "gray",
-                fontSize: 10,
-                
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
               }}>
-              Map
-            </Text>
-          </View>
-        ),
-      }}
-       
-      />
-        <HomeTab.Screen
-       name="message"
-       component={QuizScreen}
-       options={{
-        headerShown: false,
-        tabBarIcon: ({focused}) => (
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              flex: 1,
-            }}>
-            <MaterialIcons
-              size={22}
-              name="mark-email-unread"
-              color={focused ? 'white' : "gray"}
-            />
-            <Text
-              style={{
-                color: focused ? 'white' : "gray",
-                fontSize: 10,
-                
-              }}>
-              Messages
-            </Text>
-          </View>
-        ),
-      }}
-       
-      />
-        <HomeTab.Screen
-       name="war"
-       component={QuizScreen}
-       options={{
-        headerShown: false,
-        tabBarIcon: ({focused}) => (
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              flex: 1,
-            }}>
-            <FontAwesome5
-              size={22}
-              name="bookmark"
-              color={focused ? 'white' : "gray"}
-            />
-            <Text
-              style={{
-                color: focused ? 'white' : "gray",
-                fontSize: 10,
-                
-              }}>
-              War
-            </Text>
-          </View>
-        ),
-      }}
-       
-      />
-        <HomeTab.Screen
-       name="profile"
-       component={QuizScreen}
-       options={{
-        headerShown: false,
-        tabBarIcon: ({focused}) => (
-          <View
-            style={{
-              alignItems: "center",
-              justifyContent: "center",
-              flex: 1,
-            }}>
-            <FontAwesome5
-              size={22}
-              name="user-circle"
-              color={focused ? 'white' : "gray"}
-            />
-            <Text
-              style={{
-                color: focused ? 'white' : "gray",
-                fontSize: 10,
-                
-              }}>
-              Profile
-            </Text>
-          </View>
-        ),
-      }}
-       
+              <Foundation
+                size={22}
+                name="results"
+                color={focused ? 'white' : 'gray'}
+              />
+              <Text
+                style={{
+                  fontSize: 10,
+                  color: focused ? 'white' : 'gray',
+                }}>
+                Results
+              </Text>
+            </View>
+          ),
+        }}
       />
 
+      <HomeTab.Screen
+        name="Leaderboard"
+        component={LeaderboardScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({focused}) => (
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <MaterialIcons
+                size={22}
+                name="leaderboard"
+                color={focused ? 'white' : 'gray'}
+              />
+              <Text
+                style={{
+                  fontSize: 10,
+                  color: focused ? 'white' : 'gray',
+                }}>
+                Leaderboard
+              </Text>
+            </View>
+          ),
+        }}
+      />
+
+      <HomeTab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          headerShown: false,
+          tabBarIcon: ({focused}) => (
+            <View
+              style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <FontAwesome5
+                size={22}
+                name="user-circle"
+                color={focused ? 'white' : 'gray'}
+              />
+              <Text
+                style={{
+                  color: focused ? 'white' : 'gray',
+                  fontSize: 10,
+                }}>
+                Profile
+              </Text>
+            </View>
+          ),
+        }}
+      />
     </HomeTab.Navigator>
   );
 };

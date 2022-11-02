@@ -1,17 +1,66 @@
-import {View, Text, Image, TouchableOpacity} from 'react-native';
 import React, {useEffect} from 'react';
-import SplashScreen from 'react-native-splash-screen';
-import {TextInput} from 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message';
+import useLoginMutation from '../hooks/useLoginMutation';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {View, Text, Image, TouchableOpacity} from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import useAddAuthDataMutation from '../hooks/useAddAuthDataMutation';
 
 const WelcomeScreen = ({navigation}) => {
-  useEffect(() => {
-    SplashScreen.hide();
-  }, []);
+  const {mutate: login, isLoading: isLoggingIn} = useLoginMutation();
+  const {mutate: addAuthData, isLoading: isSettingAuthData} =
+    useAddAuthDataMutation();
+
+  function onGoogleButtonPress() {
+    // login(undefined, {
+    //   onSuccess({data}) {
+    //     console.log('success', data);
+    const message = 'Login successful';
+    //     const token = data.token;
+    //     const user = data.user;
+
+    const authData = {
+      token: '2|TBa8dNkWhCEkBR4kqwtjmoPwWC0p8RtQvQCQA4xu',
+      user: JSON.parse(
+        '{"id":1,"name":"A user","avatar":"https://picsum.photos/seed/picsum/200/300","username":"@username","google_id":"636263a2edc73","email":"name@gmail.com","coins":20,"email_verified_at":null,"created_at":"2022-11-02T12:33:38.000000Z","updated_at":"2022-11-02T12:33:38.000000Z"}',
+      ),
+    };
+
+    addAuthData(authData, {
+      onSuccess() {
+        Toast.show({
+          type: 'success',
+          text1: 'Success',
+          text2: message,
+        });
+      },
+    });
+    // }
+    //   onError(error) {
+    //     if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+    //       // user cancelled the login flow
+    //       console.log('user cancelled the login flow');
+    //     } else if (error.code === statusCodes.IN_PROGRESS) {
+    //       console.log('operation (e.g. sign in) is in progress already');
+    //     } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+    //       console.log('play services not available or outdated');
+    //     } else {
+    //       console.log('some other error', error);
+    //       // some other error happened
+    //     }
+
+    //     Toast.show({
+    //       type: 'error',
+    //       text1: 'Error',
+    //       text2: error.message,
+    //     });
+    //   },
+    // });
+  }
+
   return (
     <View
-      style={{flex: 1, backgroundColor: '#000815', justifyContent: 'center',}}>
+      style={{flex: 1, backgroundColor: '#000815', justifyContent: 'center'}}>
       <View style={{alignItems: 'center', padding: 20}}>
         <Image
           source={require('../assets/welcome.png')}
@@ -27,7 +76,7 @@ const WelcomeScreen = ({navigation}) => {
           Welcome to DQUIZ, Hope you learn a lot by our question answer project.
         </Text>
         <View>
-          <Text
+          {/* <Text
             style={{
               color: 'white',
               fontSize: 18,
@@ -44,15 +93,17 @@ const WelcomeScreen = ({navigation}) => {
               width: 240,
               backgroundColor: '#1E2237',
               borderRadius: 3,
-              color:'white',
-              paddingLeft:10
+              color: 'white',
+              paddingLeft: 10,
             }}
           />
           <Text
             style={{color: 'white', alignSelf: 'center', marginVertical: 10}}>
             ------------------- Or -------------------
-          </Text>
+          </Text> */}
           <TouchableOpacity
+            onPress={onGoogleButtonPress}
+            disabled={isLoggingIn || isSettingAuthData}
             style={{
               height: 60,
               width: 240,
@@ -61,8 +112,8 @@ const WelcomeScreen = ({navigation}) => {
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 8,
-              justifyContent:'space-between',
-              paddingHorizontal:15
+              justifyContent: 'space-between',
+              paddingHorizontal: 15,
             }}>
             <View
               style={{
@@ -92,9 +143,8 @@ const WelcomeScreen = ({navigation}) => {
           bottom: 10,
           justifyContent: 'center',
           alignItems: 'center',
-          alignSelf:'flex-end',
-          right:10
-          
+          alignSelf: 'flex-end',
+          right: 10,
         }}>
         <FontAwesome5 name="arrow-right" color={'#000815'} size={40} />
       </TouchableOpacity>
