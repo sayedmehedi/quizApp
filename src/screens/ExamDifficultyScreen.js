@@ -9,6 +9,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 
 const screenWidth = Dimensions.get('screen').width;
@@ -17,19 +18,22 @@ const ExamDifficultyScreen = ({navigation}) => {
   const {data: getAuthDataResponse} = useGetAuthDataQuery();
 
   return (
-    <View style={{flex: 1, backgroundColor: '#000815'}}>
+    <ScrollView
+      style={{flex: 1, backgroundColor: '#000815'}}
+      contentContainerStyle={{
+        paddingBottom: 150,
+      }}>
       <View
         style={{
           padding: 20,
           flexDirection: 'row',
           alignItems: 'center',
-          justifyContent: 'space-between',
         }}>
         <View
           style={{
-            width: 100,
-            height: 100,
-            borderWidth: 10,
+            width: 60,
+            height: 60,
+            borderWidth: 3,
             borderRadius: 50,
             borderColor: 'white',
             alignItems: 'center',
@@ -40,40 +44,51 @@ const ExamDifficultyScreen = ({navigation}) => {
               uri: getAuthDataResponse.user.avatar,
             }}
             style={{
-              width: 80,
-              height: 80,
+              width: 50,
+              height: 50,
               borderRadius: 50,
             }}
           />
         </View>
-        <View>
-          <Text style={{color: 'white'}}>Welcome!</Text>
-          <Text style={{color: 'white'}}>{getAuthDataResponse.user.name}</Text>
+
+        <View
+          style={{
+            padding: 5,
+            marginLeft: 10,
+            borderRadius: 10,
+            backgroundColor: '#FFFBE3',
+          }}>
+          <Text style={{color: 'black', fontSize: 14}}>Welcome!</Text>
+          <Text style={{color: 'black', fontSize: 17}}>
+            {getAuthDataResponse.user.name}
+          </Text>
         </View>
+
+        <View style={{flex: 1}} />
+
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <View
             style={{
-              height: 40,
-              width: 80,
               borderWidth: 1,
               borderRadius: 20,
-              borderColor: 'white',
-              flexDirection: 'row',
+              paddingVertical: 5,
               alignItems: 'center',
+              flexDirection: 'row',
+              borderColor: 'white',
+              paddingHorizontal: 10,
               justifyContent: 'center',
             }}>
-            <View style={{flexDirection: 'row'}}>
-              <Image
-                source={require('../assets/coin.png')}
-                style={{
-                  width: 25,
-                  height: 25,
-                }}
-              />
-              <Text style={{color: 'white', marginLeft: 5}}>
-                {getAuthDataResponse.user.coins}
-              </Text>
-            </View>
+            <Image
+              source={require('../assets/coin.png')}
+              style={{
+                width: 25,
+                height: 25,
+                marginTop: 5,
+              }}
+            />
+            <Text style={{color: 'white', marginLeft: 5}}>
+              {getAuthDataResponse.user.coins}
+            </Text>
           </View>
           <TouchableOpacity
             style={{
@@ -556,7 +571,7 @@ const ExamDifficultyScreen = ({navigation}) => {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 

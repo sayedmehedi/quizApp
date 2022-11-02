@@ -1,13 +1,13 @@
 import React from 'react';
-import {View, Text, StyleSheet, Pressable} from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import ResultsScreen from '../screens/ResultsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import LeaderboardScreen from '../screens/LeaderboardScreen';
-import ExaminationsScreen from '../screens/ExaminationsScreen';
+import {View, Text, StyleSheet, Pressable} from 'react-native';
 import Foundation from 'react-native-vector-icons/Foundation';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import ExamDifficultyScreen from '../screens/ExamDifficultyScreen';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 const HomeTab = createBottomTabNavigator();
@@ -32,7 +32,7 @@ const TabNavigator = () => {
       }}>
       <HomeTab.Screen
         name="Examinations"
-        component={ExaminationsScreen}
+        component={ExamDifficultyScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({focused}) => (
