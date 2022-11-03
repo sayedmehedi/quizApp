@@ -6,14 +6,16 @@ export default function useAnswerExaminationMutation() {
 
   return useMutation({
     mutationFn: async function (data) {
-      return await apiClient.post(
-        `examinations/${data.examinationId}/answers`,
-        {
+      return await apiClient
+        .post(`examinations/${data.examinationId}/answers`, {
           answers: data.answers,
-        },
-      );
+          duration: data.duration,
+        })
+        .then(response => response.data);
     },
     onSuccess() {
+      queryClient.invalidateQueries(['profile']);
+      queryClient.invalidateQueries(['leaderboard', 'list']);
       queryClient.invalidateQueries(['examination', 'list']);
     },
   });

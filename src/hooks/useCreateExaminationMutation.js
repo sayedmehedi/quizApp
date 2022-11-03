@@ -6,11 +6,13 @@ export default function useCreateExaminationMutation() {
 
   return useMutation({
     mutationFn: function (data) {
-      return apiClient.post('examinations/create', {
-        ques_kind: data.quesKind,
-        ques_count: data.quesCount,
-        difficulty_level: data.difficultyLevel,
-      });
+      return apiClient
+        .post('examinations/create', {
+          ques_kind: data.quesKind,
+          ques_count: data.quesCount,
+          difficulty_level: data.difficultyLevel,
+        })
+        .then(response => response.data);
     },
     onSuccess() {
       queryClient.invalidateQueries(['examination', 'list']);

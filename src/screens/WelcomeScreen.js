@@ -1,15 +1,15 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Toast from 'react-native-toast-message';
 import useLoginMutation from '../hooks/useLoginMutation';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import useAddAuthDataMutation from '../hooks/useAddAuthDataMutation';
+import useAddAuthTokenMutation from '../hooks/useAddAuthTokenMutation';
 
 const WelcomeScreen = ({navigation}) => {
   const {mutate: login, isLoading: isLoggingIn} = useLoginMutation();
   const {mutate: addAuthData, isLoading: isSettingAuthData} =
-    useAddAuthDataMutation();
+    useAddAuthTokenMutation();
 
   function onGoogleButtonPress() {
     // login(undefined, {
@@ -19,14 +19,9 @@ const WelcomeScreen = ({navigation}) => {
     //     const token = data.token;
     //     const user = data.user;
 
-    const authData = {
-      token: '2|TBa8dNkWhCEkBR4kqwtjmoPwWC0p8RtQvQCQA4xu',
-      user: JSON.parse(
-        '{"id":1,"name":"A user","avatar":"https://picsum.photos/seed/picsum/200/300","username":"@username","google_id":"636263a2edc73","email":"name@gmail.com","coins":20,"email_verified_at":null,"created_at":"2022-11-02T12:33:38.000000Z","updated_at":"2022-11-02T12:33:38.000000Z"}',
-      ),
-    };
+    const token = '2|TBa8dNkWhCEkBR4kqwtjmoPwWC0p8RtQvQCQA4xu';
 
-    addAuthData(authData, {
+    addAuthData(token, {
       onSuccess() {
         Toast.show({
           type: 'success',

@@ -11,21 +11,61 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {useStopwatch} from 'react-timer-hook';
+import Toast from 'react-native-toast-message';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useForm, Controller, useFieldArray} from 'react-hook-form';
 import useAnswerExaminationMutation from '../hooks/useAnswerExaminationMutation';
+import useGetProfileQuery from '../hooks/useGetProfileQuery';
 
 const {width} = Dimensions.get('screen');
 
 const QuizScreen = ({route, navigation}) => {
   const ref = React.useRef();
+  const [coinCount, setCoinCount] = React.useState(0);
   const [showHint, setShowHint] = React.useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
 
-  const {mutate: answerExamination, isLoading: isAnsweringExamination} =
-    useAnswerExaminationMutation();
+  const {
+    error,
+    isError,
+    mutate: answerExamination,
+    isLoading: isAnsweringExamination,
+  } = useAnswerExaminationMutation();
+
+  const {
+    data: profileData,
+    error: profileError,
+    isError: isProfileError,
+    isLoading: isProfileLoading,
+  } = useGetProfileQuery();
+
+  React.useEffect(() => {
+    if (!isProfileLoading && !!profileData) {
+      setCoinCount(profileData?.data?.coins);
+    }
+  }, [profileData, isProfileLoading]);
+
+  React.useEffect(() => {
+    if (isProfileError) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: profileError.message,
+      });
+    }
+  }, [isProfileError, profileError]);
+
+  React.useEffect(() => {
+    if (isError) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: error.message,
+      });
+    }
+  }, [isError, error]);
 
   const {minutes, seconds, pause} = useStopwatch({
     autoStart: true,
@@ -71,23 +111,36 @@ const QuizScreen = ({route, navigation}) => {
       ref?.current.scrollTo({x: offset, y: 0, animated: true});
       setCurrentSlideIndex(currentSlideIndex + 1);
     } else {
-      console.log('questions are', questions);
       pause();
       answerExamination(
         {
           answers: questions,
+          duration: (minutes * 60 + seconds) * 1000,
           examinationId: route.params.examination.id,
         },
         {
           onSuccess({data}) {
-            navigation.navigate('Examresult', {
-              examination: data.data,
+            navigation.replace('Examresult', {
+              examination: data,
             });
           },
         },
       );
     }
   };
+
+  if (isProfileLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: '#000815'}}>
@@ -110,7 +163,7 @@ const QuizScreen = ({route, navigation}) => {
                   height: 25,
                 }}
               />
-              <Text style={{color: 'white', marginLeft: 5}}>20</Text>
+              <Text style={{color: 'white', marginLeft: 5}}>{coinCount}</Text>
             </View>
           </View>
           <View
@@ -305,6 +358,7 @@ const QuizScreen = ({route, navigation}) => {
                       <TouchableOpacity
                         onPress={() => {
                           isSkipped.onChange(true);
+                          setCoinCount(prevCount => prevCount - 1);
                         }}>
                         <Text style={{color: 'white', fontSize: 14}}>
                           SKIP QUESTION
@@ -358,6 +412,7 @@ const QuizScreen = ({route, navigation}) => {
 
           <TouchableOpacity
             onPress={goToNextSlide}
+            disabled={isAnsweringExamination}
             style={{
               right: 10,
               width: 70,

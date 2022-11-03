@@ -1,14 +1,33 @@
 import React from 'react';
 import Toast from 'react-native-toast-message';
+import {Slider} from '@miblanchard/react-native-slider';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import useGetProfileQuery from '../hooks/useGetProfileQuery';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import useCreateExaminationMutation from '../hooks/useCreateExaminationMutation';
 
 const QuestionKindScreen = ({navigation, route}) => {
   const [questionKind, setQuestionKind] = React.useState('');
-  const [questionCount, setQuestionCount] = React.useState(20);
+  const [questionCount, setQuestionCount] = React.useState(1);
+
+  const {
+    data: profileData,
+    error: profileError,
+    isError: isProfileError,
+    isLoading: isProfileLoading,
+  } = useGetProfileQuery();
+
+  React.useEffect(() => {
+    if (isProfileError) {
+      Toast.show({
+        type: 'error',
+        text1: 'Error',
+        text2: profileError.message,
+      });
+    }
+  }, [isProfileError, profileError]);
 
   const {
     error: createExamError,
@@ -26,6 +45,19 @@ const QuestionKindScreen = ({navigation, route}) => {
       });
     }
   }, [isCreateExamError, createExamError]);
+
+  if (isProfileLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <>
@@ -51,7 +83,9 @@ const QuestionKindScreen = ({navigation, route}) => {
                     width: 25,
                   }}
                 />
-                <Text style={{color: 'white', marginLeft: 5}}>20</Text>
+                <Text style={{color: 'white', marginLeft: 5}}>
+                  {profileData?.data?.coins}
+                </Text>
               </View>
             </View>
             <TouchableOpacity
@@ -185,6 +219,38 @@ const QuestionKindScreen = ({navigation, route}) => {
               </Text>
             </TouchableOpacity>
           </View>
+
+          <View>
+            <Text style={{color: 'white', textAlign: 'center'}}>
+              {questionCount}
+            </Text>
+          </View>
+
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View>
+              <Text style={{color: 'white'}}>1</Text>
+            </View>
+
+            <View style={{flex: 1, marginHorizontal: 10}}>
+              <Slider
+                step={1}
+                minimumValue={1}
+                maximumValue={100}
+                value={questionCount}
+                onValueChange={value => {
+                  if (Array.isArray(value)) {
+                    setQuestionCount(value[0]);
+                  } else {
+                    setQuestionCount(value);
+                  }
+                }}
+              />
+            </View>
+
+            <View>
+              <Text style={{color: 'white'}}>100</Text>
+            </View>
+          </View>
         </View>
 
         <TouchableOpacity
@@ -212,11 +278,8 @@ const QuestionKindScreen = ({navigation, route}) => {
                 difficultyLevel: route.params.difficultyLevel,
               },
               {
-                onSuccess({data}) {
-                  console.log('data', data);
+                onSuccess(data) {
                   if (data?.data !== undefined) {
-                    console.log('undefined check', data);
-
                     navigation.navigate('Quiz', {
                       examination: data.data,
                     });

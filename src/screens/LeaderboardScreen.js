@@ -7,7 +7,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 const LeaderboardScreen = () => {
   const [filterBy, setFilterBy] = React.useState('week');
 
-  const {data, isLoading, isError, error} = useGetLeaderboardQuery({filterBy});
+  const {data, isError, error} = useGetLeaderboardQuery({filterBy});
 
   React.useEffect(() => {
     if (isError) {
@@ -66,7 +66,7 @@ const LeaderboardScreen = () => {
           paddingBottom: 150,
           paddingHorizontal: 30,
         }}>
-        {data?.data?.data?.map(item => (
+        {data?.data?.map(item => (
           <View
             key={item.id}
             style={{

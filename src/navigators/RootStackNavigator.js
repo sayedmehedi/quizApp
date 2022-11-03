@@ -8,36 +8,37 @@ import WelcomeScreen from '../screens/WelcomeScreen';
 import SplashScreen from 'react-native-splash-screen';
 import QuestionKindScreen from '../screens/QuestionKindScreen';
 import {createStackNavigator} from '@react-navigation/stack';
-import useGetAuthDataQuery from '../hooks/useGetAuthDataQuery';
+import useGetAuthTokenQuery from '../hooks/useGetAuthTokenQuery';
 import ExamDifficultyScreen from '../screens/ExamDifficultyScreen';
+import ExamloaderScreen from '../screens/ExamloaderScreen';
 
 const RootStack = createStackNavigator();
 
 const RootStackNavigator = () => {
   const {
-    error: authDataError,
-    data: getAuthDataResponse,
-    isError: isAuthDataError,
-    isLoading: isAuthDataLoading,
-  } = useGetAuthDataQuery();
+    error: authTokenError,
+    isError: isAuthTokenError,
+    data: getAuthTokenResponse,
+    isLoading: isAuthTokenLoading,
+  } = useGetAuthTokenQuery();
 
   React.useEffect(() => {
-    if (!isAuthDataLoading) {
+    if (!isAuthTokenLoading) {
       SplashScreen.hide();
     }
-  }, [isAuthDataLoading]);
+  }, [isAuthTokenLoading]);
 
   React.useEffect(() => {
-    if (isAuthDataError) {
+    if (isAuthTokenError) {
       Toast.show({
         text1: 'Error',
         type: 'error',
-        text2: authDataError.message,
+        text2: authTokenError.message,
       });
     }
-  }, [isAuthDataError, authDataError]);
+  }, [isAuthTokenError, authTokenError]);
 
-  if (isAuthDataLoading) {
+  if (isAuthTokenLoading) {
     return (
       <View
         style={{
@@ -55,7 +56,7 @@ const RootStackNavigator = () => {
       screenOptions={{
         headerShown: false,
       }}>
-      {!getAuthDataResponse ? (
+      {!getAuthTokenResponse ? (
         <RootStack.Screen name="initial" component={WelcomeScreen} />
       ) : (
         <>
@@ -70,6 +71,7 @@ const RootStackNavigator = () => {
           />
           <RootStack.Screen name="Quiz" component={QuizScreen} />
           <RootStack.Screen name="Examresult" component={ResultScreen} />
+          <RootStack.Screen name="ExamLoader" component={ExamloaderScreen} />
         </>
       )}
     </RootStack.Navigator>

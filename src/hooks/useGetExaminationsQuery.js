@@ -5,14 +5,16 @@ export default function useGetExaminationsQuery(params = {}) {
   return useInfiniteQuery({
     queryKey: ['examination', 'list'],
     queryFn: function ({pageParam}) {
-      return apiClient.get('examinations', {
-        params: pageParam,
-      });
+      return apiClient
+        .get('examinations', {
+          params: pageParam,
+        })
+        .then(response => response.data);
     },
     getNextPageParam: lastPage => {
-      if (lastPage.data?.meta?.current_page < lastPage.data?.meta?.last_page) {
+      if (lastPage.meta?.current_page < lastPage.meta?.last_page) {
         return {
-          page: lastPage.data.meta.current_page + 1,
+          page: lastPage.meta.current_page + 1,
         };
       }
     },

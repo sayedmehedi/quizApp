@@ -27,80 +27,94 @@ const ResultScreen = ({navigation, route}) => {
         }}>
         <Text style={{fontSize: 16}}>Correct answer: </Text>
         <Text style={{fontSize: 16}}>
-          {examination.total_correct}/{examination.ques_count}
+          {examination?.total_correct}/{examination?.ques_count}
         </Text>
       </View>
 
-      {examination.results.map(result => (
-        <View
-          key={result.id}
-          style={{
-            padding: 20,
-            borderRadius: 15,
-            marginBottom: 20,
-            backgroundColor: '#1E2237',
-          }}>
-          <Text style={{color: 'white', fontSize: 16}}>
-            {result.question_text}
-          </Text>
+      {examination?.results.length === 0 ? (
+        <View>
+          <Text style={{color: 'white'}}>No data</Text>
+        </View>
+      ) : (
+        examination?.results.map(result => (
+          <View
+            key={result.id}
+            style={{
+              padding: 20,
+              borderRadius: 15,
+              marginBottom: 20,
+              backgroundColor: '#1E2237',
+            }}>
+            <Text style={{color: 'white', fontSize: 16}}>
+              {result.question_text}
+            </Text>
 
-          {result.skipped ? (
-            <View
-              style={{
-                marginTop: 10,
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <Text style={{color: 'white', fontSize: 18}}>Skipped</Text>
-            </View>
-          ) : (
-            <View
-              style={{
-                marginTop: 10,
-                flexDirection: 'row',
-                alignItems: 'center',
-              }}>
-              <View style={{marginRight: 10}}>
-                {result.is_correct ? (
-                  <AntDesign size={22} name={'checkcircle'} color={'#00E44E'} />
-                ) : (
-                  <FontAwesome5 size={22} name={'times-circle'} color={'red'} />
-                )}
-              </View>
-              <Text style={{color: 'white', fontSize: 18}}>
-                {result.given_answer}
-              </Text>
-            </View>
-          )}
-
-          {!result.is_correct && (
-            <React.Fragment>
+            {result.skipped ? (
               <View
                 style={{
-                  padding: 10,
-                  borderRadius: 10,
-                  marginVertical: 20,
+                  marginTop: 10,
                   flexDirection: 'row',
-                  alignSelf: 'flex-start',
-                  backgroundColor: '#00E44E',
-                  justifyContent: 'space-between',
-                }}>
-                <Text style={{fontSize: 16}}>Answer: </Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginVertical: 10,
                   alignItems: 'center',
                 }}>
-                <Text style={{color: 'white', fontSize: 16}}>
-                  {result.correct_answer}
+                <Text style={{color: 'white', fontSize: 18}}>Skipped</Text>
+              </View>
+            ) : (
+              <View
+                style={{
+                  marginTop: 10,
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                }}>
+                <View style={{marginRight: 10}}>
+                  {result.is_correct ? (
+                    <AntDesign
+                      size={22}
+                      name={'checkcircle'}
+                      color={'#00E44E'}
+                    />
+                  ) : (
+                    <FontAwesome5
+                      size={22}
+                      name={'times-circle'}
+                      color={'red'}
+                    />
+                  )}
+                </View>
+                <Text style={{color: 'white', fontSize: 18}}>
+                  {result.given_answer}
                 </Text>
               </View>
-            </React.Fragment>
-          )}
-        </View>
-      ))}
+            )}
+
+            {!result.is_correct && (
+              <React.Fragment>
+                <View
+                  style={{
+                    padding: 10,
+                    borderRadius: 10,
+                    marginVertical: 20,
+                    flexDirection: 'row',
+                    alignSelf: 'flex-start',
+                    backgroundColor: '#00E44E',
+                    justifyContent: 'space-between',
+                  }}>
+                  <Text style={{fontSize: 16}}>Answer: </Text>
+                </View>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    marginVertical: 10,
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: 'white', fontSize: 16}}>
+                    {result.correct_answer}
+                  </Text>
+                </View>
+              </React.Fragment>
+            )}
+          </View>
+        ))
+      )}
     </ScrollView>
   );
 };

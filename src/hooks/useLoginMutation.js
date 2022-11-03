@@ -16,9 +16,11 @@ export default function useLoginMutation() {
 
       await auth().signInWithCredential(googleCredential);
 
-      return await apiClient.post('auth/login', {
-        oauth_token: idToken,
-      });
+      return await apiClient
+        .post('auth/login', {
+          oauth_token: idToken,
+        })
+        .then(response => response.data);
     },
   });
 }

@@ -1,21 +1,34 @@
 import React from 'react';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import useGetAuthDataQuery from '../hooks/useGetAuthDataQuery';
+import useGetProfileQuery from '../hooks/useGetProfileQuery';
 import {
   View,
   Text,
   Image,
   StyleSheet,
   Dimensions,
-  TouchableOpacity,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 
 const screenWidth = Dimensions.get('screen').width;
 
 const ExamDifficultyScreen = ({navigation}) => {
-  const {data: getAuthDataResponse} = useGetAuthDataQuery();
+  const {data: getProfileResponse, isLoading} = useGetProfileQuery();
+
+  if (isLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
 
   return (
     <ScrollView
@@ -41,7 +54,7 @@ const ExamDifficultyScreen = ({navigation}) => {
           }}>
           <Image
             source={{
-              uri: getAuthDataResponse.user.avatar,
+              uri: getProfileResponse?.data?.avatar,
             }}
             style={{
               width: 50,
@@ -60,7 +73,7 @@ const ExamDifficultyScreen = ({navigation}) => {
           }}>
           <Text style={{color: 'black', fontSize: 14}}>Welcome!</Text>
           <Text style={{color: 'black', fontSize: 17}}>
-            {getAuthDataResponse.user.name}
+            {getProfileResponse?.data?.name}
           </Text>
         </View>
 
@@ -87,7 +100,7 @@ const ExamDifficultyScreen = ({navigation}) => {
               }}
             />
             <Text style={{color: 'white', marginLeft: 5}}>
-              {getAuthDataResponse.user.coins}
+              {getProfileResponse?.data?.coins}
             </Text>
           </View>
           <TouchableOpacity
