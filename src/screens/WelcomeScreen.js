@@ -19,7 +19,7 @@ const WelcomeScreen = ({navigation}) => {
     //     const token = data.token;
     //     const user = data.user;
 
-    const token = '2|TBa8dNkWhCEkBR4kqwtjmoPwWC0p8RtQvQCQA4xu';
+    const token = '1|1W6a7ukhXdiMVc0Gs4hhNAqhhdLOSQYxF4CyT6SB';
 
     addAuthData(token, {
       onSuccess() {
