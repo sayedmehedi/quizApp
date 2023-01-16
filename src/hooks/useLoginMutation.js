@@ -9,18 +9,19 @@ export default function useLoginMutation() {
       // Check if your device supports Google Play
       await GoogleSignin.hasPlayServices({showPlayServicesUpdateDialog: true});
       // Get the users ID token
-      const {idToken} = await GoogleSignin.signIn();
+      await GoogleSignin.signIn();
+      const tokens = await GoogleSignin.getTokens();
 
       // Create a Google credential with the token
-      const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      // const googleCredential = auth.GoogleAuthProvider.credential(idToken);
+      // await auth().signInWithCredential(googleCredential);
+      // const oauthToken = googleCredential.secret;
 
-      await auth().signInWithCredential(googleCredential);
+      const response = await apiClient.post('auth/login', {
+        oauth_token: tokens.accessToken,
+      });
 
-      return await apiClient
-        .post('auth/login', {
-          oauth_token: idToken,
-        })
-        .then(response => response.data);
+      return response.data;
     },
   });
 }

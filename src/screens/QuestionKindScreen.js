@@ -9,6 +9,8 @@ import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import useCreateExaminationMutation from '../hooks/useCreateExaminationMutation';
 
 const QuestionKindScreen = ({navigation, route}) => {
+  const [coinCount, setCoinCount] = React.useState(20);
+
   const [questionKind, setQuestionKind] = React.useState('');
   const [questionCount, setQuestionCount] = React.useState(1);
 
@@ -83,12 +85,13 @@ const QuestionKindScreen = ({navigation, route}) => {
                     width: 25,
                   }}
                 />
-                <Text style={{color: 'white', marginLeft: 5}}>
-                  {profileData?.data?.coins}
-                </Text>
+                <Text style={{color: 'white', marginLeft: 5}}>{coinCount}</Text>
               </View>
             </View>
             <TouchableOpacity
+              onPress={() => {
+                setCoinCount(prevCoinsCount => prevCoinsCount + 1);
+              }}
               style={{
                 height: 25,
                 width: 25,
@@ -282,6 +285,7 @@ const QuestionKindScreen = ({navigation, route}) => {
                   if (data?.data !== undefined) {
                     navigation.navigate('Quiz', {
                       examination: data.data,
+                      coinCount,
                     });
                   }
                 },
