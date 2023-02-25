@@ -14,18 +14,20 @@ import {useStopwatch} from 'react-timer-hook';
 import Toast from 'react-native-toast-message';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import useGetProfileQuery from '../hooks/useGetProfileQuery';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import {useForm, Controller, useFieldArray} from 'react-hook-form';
 import useAnswerExaminationMutation from '../hooks/useAnswerExaminationMutation';
-import useGetProfileQuery from '../hooks/useGetProfileQuery';
 
 const {width} = Dimensions.get('screen');
 
 const QuizScreen = ({route, navigation}) => {
   const ref = React.useRef();
-  const [coinCount, setCoinCount] = React.useState(0);
   const [showHint, setShowHint] = React.useState(false);
   const [currentSlideIndex, setCurrentSlideIndex] = React.useState(0);
+  const [coinCount, setCoinCount] = React.useState(
+    () => route.params.coinCount,
+  );
 
   const {
     error,
@@ -33,29 +35,6 @@ const QuizScreen = ({route, navigation}) => {
     mutate: answerExamination,
     isLoading: isAnsweringExamination,
   } = useAnswerExaminationMutation();
-
-  const {
-    data: profileData,
-    error: profileError,
-    isError: isProfileError,
-    isLoading: isProfileLoading,
-  } = useGetProfileQuery();
-
-  React.useEffect(() => {
-    if (!isProfileLoading && !!profileData) {
-      setCoinCount(profileData?.data?.coins);
-    }
-  }, [profileData, isProfileLoading]);
-
-  React.useEffect(() => {
-    if (isProfileError) {
-      Toast.show({
-        type: 'error',
-        text1: 'Error',
-        text2: profileError.message,
-      });
-    }
-  }, [isProfileError, profileError]);
 
   React.useEffect(() => {
     if (isError) {
@@ -128,19 +107,6 @@ const QuizScreen = ({route, navigation}) => {
       );
     }
   };
-
-  if (isProfileLoading) {
-    return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}>
-        <Text>Loading...</Text>
-      </View>
-    );
-  }
 
   return (
     <ScrollView style={{flex: 1, backgroundColor: '#000815'}}>

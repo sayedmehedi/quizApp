@@ -11,7 +11,7 @@ import {createAsyncStoragePersister} from '@tanstack/query-async-storage-persist
 
 GoogleSignin.configure({
   webClientId:
-    '337213414618-73f3hsf3ft46ptt0fcg8kfbe5juhfas3.apps.googleusercontent.com',
+    '382590440309-0sdt1e7vvl9937mg6d53uur7sspjun4h.apps.googleusercontent.com',
 });
 
 // Create a client
