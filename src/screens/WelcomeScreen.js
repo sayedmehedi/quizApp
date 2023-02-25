@@ -101,7 +101,7 @@ const WelcomeScreen = ({navigation}) => {
             disabled={isLoggingIn || isSettingAuthData}
             style={{
               height: 60,
-              width: 240,
+              width: 250,
               backgroundColor: 'white',
               flexDirection: 'row',
               justifyContent: 'center',
@@ -109,6 +109,7 @@ const WelcomeScreen = ({navigation}) => {
               borderRadius: 8,
               justifyContent: 'space-between',
               paddingHorizontal: 15,
+              marginTop: 10,
             }}>
             <View
               style={{
@@ -121,7 +122,13 @@ const WelcomeScreen = ({navigation}) => {
               }}>
               <AntDesign name="google" size={20} color={'white'} />
             </View>
-            <Text style={{color: 'black', fontSize: 18, fontWeight: 'bold'}}>
+            <Text
+              style={{
+                color: 'black',
+                fontSize: 16,
+                fontWeight: 'bold',
+                marginLeft: 5,
+              }}>
               Continue with Google
             </Text>
           </TouchableOpacity>
